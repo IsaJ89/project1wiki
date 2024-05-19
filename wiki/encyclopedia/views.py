@@ -1,9 +1,18 @@
 from django.shortcuts import render
 import markdown2
 import os
+from django import forms
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+
 
 
 from . import util
+
+class NewPageForm(forms.Form):
+    task = forms.CharField(label="New Page") # class variable task
 
 
 
@@ -46,6 +55,18 @@ def search(request):
 
     
 def new(request):
+    if request.method == "POST":
+        title = request.POST.get("title")
+        content = request.POST.get("newentry")
+        filename = f"entries/{title}.md"
+        if default_storage.exists(filename):
+            return render(request, "encyclopedia/new.html",{
+                "message" : "Sorry, this entry already exists!"
+            })
+        else:
+            default_storage.save(filename, ContentFile(content))
+            return HttpResponseRedirect(reverse("entry", args=[title]))
+    
     return render(request, "encyclopedia/new.html")
 
 

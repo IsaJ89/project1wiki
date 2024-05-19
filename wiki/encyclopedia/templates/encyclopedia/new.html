@@ -1,12 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>This is a new page</title>
+        <title>New Page</title>
     </head>
     <body>
-        <h1>Will create a new page here</h1>
-        <form>
-            <textarea name="newentry" id="newentry" rows="10" cols="100" placeholder="Start writing here..."></textarea>
-        </form>
+        <h1>Please create your entry here</h1>
+            <form action="{% url 'new' %}" method="post">
+                {% csrf_token %}
+                <div>
+                    <input type="text" placeholder="Enter your title here" name="title">
+                </div>
+                <textarea name="newentry" id="newentry" rows="10" cols="100" placeholder="Start writing here..."></textarea>
+                <div>
+                    <button type="submit">Save</button>
+                </div>
+            </form>
+        {% if message %}
+            {{ message }}
+        {% endif %}
     </body>
 </html>
