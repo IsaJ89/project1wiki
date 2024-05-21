@@ -11,10 +11,6 @@ from django.urls import reverse
 
 from . import util
 
-class NewPageForm(forms.Form):
-    task = forms.CharField(label="New Page") # class variable task
-
-
 
 def index(request):
     return render(request, "encyclopedia/index.html", {
@@ -39,8 +35,11 @@ def search(request):
     get_file_names = os.listdir("entries")
     new_file_names = []
     for file in get_file_names:
-        file = file.replace(".md","")
-        new_file_names.append(file)
+        if file[0] == ".":
+            continue
+        else:
+            file = file.replace(".md","")
+            new_file_names.append(file)
     matching_files = []
     for name in new_file_names:
         if query.lower() in name.lower():
