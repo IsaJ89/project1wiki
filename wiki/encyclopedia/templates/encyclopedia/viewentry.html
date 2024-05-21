@@ -4,6 +4,10 @@
     {{ name }}
 {% endblock %}
 
+{% block nav %}
+    <a href="{% url 'edit' %}?name={{ name }}">Edit Page</a>
+{% endblock %}
+
 {% block body %}
 {{ html_view|safe }}
 {% endblock %}

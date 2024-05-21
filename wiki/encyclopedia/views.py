@@ -27,7 +27,7 @@ def entry(request,name):
         html_view = markdown2.markdown(entry_md)  #converting from .md to .html
         return render(request,"encyclopedia/viewentry.html", {
             "name" : name.capitalize(),  # "name" and "html_view" are my variables that need to be inserted
-            "html_view": html_view          # into the getentry.html template
+            "html_view": html_view          # into the viewentry.html template
         })
 
 def search(request):
@@ -68,4 +68,17 @@ def new(request):
     
     return render(request, "encyclopedia/new.html")
 
-
+def edit(request):
+    if request.method=="POST":
+        content = request.POST.get("content")
+        name = request.POST.get("name")
+        util.save_entry(name, content)
+        return HttpResponseRedirect(reverse("entry", args=[name]))
+    
+    name = request.GET.get("name")
+    name_md = util.get_entry(name)
+    return render(request, "encyclopedia/edit.html",{
+            "name":name,
+            "content":name_md
+        })
+    
