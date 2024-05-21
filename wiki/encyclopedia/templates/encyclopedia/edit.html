@@ -6,10 +6,11 @@
         </title>
     </head>
     <body>
+        <h2>You can edit the {{ name }} entry here</h2>
         <div>
             <form action="{% url 'edit' %}" method="post">
-                <h1 name="name">Here you can edit the {{ name }} entry</h1>
                 {% csrf_token %}
+                <input type="hidden" name="name" value="{{ name }}">
                 {% if content %}
                 <textarea name="content" rows="10" cols="100">{{ content }}</textarea>
                 {% endif %}
