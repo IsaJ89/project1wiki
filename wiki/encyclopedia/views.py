@@ -6,7 +6,7 @@ from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-
+import random
 
 
 from . import util
@@ -82,3 +82,9 @@ def edit(request):
             "content":name_md
         })
     
+
+def random_entry(request):
+    list_of_entries = util.list_entries()
+    random_entry = random.choice(list_of_entries)
+    random_entry = random_entry.replace(".md","")
+    return HttpResponseRedirect(reverse("entry", args=[random_entry]))
