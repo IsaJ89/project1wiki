@@ -25,7 +25,7 @@ def entry(request,name):
         })
     else:
         html_view = markdown2.markdown(entry_md)  #converting from .md to .html
-        return render(request,"encyclopedia/getentry.html", {
+        return render(request,"encyclopedia/viewentry.html", {
             "name" : name.capitalize(),  # "name" and "html_view" are my variables that need to be inserted
             "html_view": html_view          # into the getentry.html template
         })
@@ -35,7 +35,7 @@ def search(request):
     get_file_names = os.listdir("entries")
     new_file_names = []
     for file in get_file_names:
-        if file[0] == ".":
+        if file[0] == ".":  # excluding hidden files
             continue
         else:
             file = file.replace(".md","")
