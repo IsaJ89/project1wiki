@@ -7,3 +7,4 @@ Some cool features
 * easy to write
 * diverse applications
 * python yo!!
+* Let's do this!
